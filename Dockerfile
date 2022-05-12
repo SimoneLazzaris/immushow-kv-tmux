@@ -9,12 +9,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+FROM golang:1.17 as builder
+WORKDIR /src
+RUN git clone https://github.com/codenotary/immudb.git && \
+    make -C immudb
 
 FROM debian:bullseye-slim as bullseye-slim
 RUN apt-get update && apt-get install procps tmux dialog curl netcat-traditional -y
 WORKDIR /app
 COPY . .
-RUN curl -sL https://github.com/vchain-us/immudb/releases/download/v1.2.4/immudb-v1.2.4-linux-amd64-static -o immudb && chmod +x immudb
-RUN curl -sL https://github.com/vchain-us/immudb/releases/download/v1.2.4/immuclient-v1.2.4-linux-amd64-static -o immuclient && chmod +x immuclient
+COPY --from=builder /src/immudb/immudb /src/immudb/immuclient /app/
 
 ENTRYPOINT ["bash", "start.sh"]

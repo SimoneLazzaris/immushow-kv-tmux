@@ -24,7 +24,9 @@ sleep 0.5
 fi
 }
 
-for k in $(./immuclient scan ''|awk '/key:/{print $2}')
+KEYS=$(./immuclient scan ''|sed -z 's/\nkey/\tkey/g;s/\nvalue/\tvalue/g;s/\n\n/\n/g;s/ \+/ /g'|sort -nk 2|awk '/key:/{print $4}')
+
+for k in $KEYS
 do
 immu_ransom $k
 done
