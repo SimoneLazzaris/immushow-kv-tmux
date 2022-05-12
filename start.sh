@@ -27,10 +27,10 @@ tmux splitw -h -p 65
 tmux splitw -v -p 50
 tmux selectp -t 0
 tmux splitw -v -p 50
-tmux selectp -t 0 \; send-keys 'echo 0' C-m
-tmux selectp -t 1 \; send-keys 'echo 1' C-m
-tmux selectp -t 2 \; send-keys 'echo 2' C-m
-tmux selectp -t 3 \; send-keys 'echo 3' C-m
+# tmux selectp -t 0 \; send-keys 'echo 0' C-m
+# tmux selectp -t 1 \; send-keys 'echo 1' C-m
+# tmux selectp -t 2 \; send-keys 'echo 2' C-m
+# tmux selectp -t 3 \; send-keys 'echo 3' C-m
 
 # Pane layout:
 # 0 2
