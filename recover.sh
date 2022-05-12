@@ -16,8 +16,6 @@ SPEED=$1
 
 immu_recover() {
 OLD=`$IMMUCLIENT get $1@-1 --value-only`
-echo -e "::> \033[32mget $1@-1\033[0m"
-echo "<:: $OLD"
 echo -e "::> \033[32mset $1 $OLD\033[0m"
 $IMMUCLIENT set $1 "$OLD"
 if [ "$SPEED" == "demo" ]

@@ -13,6 +13,14 @@
 
 source env.sh
 export TERM=screen
-while ! nc -z 127.0.0.1 3322; do sleep 0.5; done
-watch -t -n 0.5 ./watcher.sh
+echo
+KEYS=$($IMMUCLIENT scan ''|sed -z 's/\nkey/\tkey/g;s/\nvalue/\tvalue/g;s/\n\n/\n/g;s/ \+/ /g'|sort -nk 2|awk '/key:/{print $4}')
+for k in $KEYS
+do
+O=$($IMMUCLIENT get $k)
+TX=$(echo $O|awk '/tx:/{print $2}')
+VAL=$(echo $O|sed 's/.*value: \+//')
+printf "tx: %03d\tkey: %s\tvalue: %s\n" "$TX" "$k" "$VAL"
+done
+echo 
 
